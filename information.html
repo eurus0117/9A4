@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University of Warwick Sports Facilities</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='information.css') }}">
+
+</head>
+<body>
+    <header class="header">
+        <h1>Welcome to University of Warwick's recreational and sports facilities</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('information') }}">information</a></li>
+                <li><a href="{{ url_for('booking') }}">booking</a></li>
+            </ul>
+        </nav>
+        <p>There is some informtaion you might interest</p>
+    </header>
+ 
+
+    <main class="facilities">
+        <!-- Left Column -->
+        <section class="left-column">
+            <!-- Gym Information -->
+            <div class="facility">
+                <img src="{{ url_for('static', filename='gym.jpg') }}" alt="gym" class="facility-image">
+                <div class="facility-info">
+                    <h2>GYM</h2>
+                    <p>200+ Fitness stations for cardio, resistance and functional training. </p>
+                    <p>Dedicated strength training area and lighter weight area.</p>
+                    <h3>Opening times: </h3>
+                        <p>Monday - Friday 6.00am - 11.00pm</p>
+                        <p>Saturday - Sunday 7.00am - 8.00pm</p>
+                </div>
+            </div>
+
+            <!-- Swimming Pool Information -->
+            <div class="facility">
+                <img src="{{ url_for('static', filename='pool.jpg') }}" alt="Swimming Pool" class="facility-image">
+                <div class="facility-info">
+                    <h2>Swimming pool</h2>
+                    <p>25m swimming pool, after your workout you can relax in the sauna and steam room.</p> 
+                    <p>There are swimming lessons and coaching for all ages.</p>
+                    <h3>Opening times:</h3>
+                        <p>Monday - Friday 6.00am - 10.00pm</p>
+                        <p>Saturday - Sunday 7.00am - 8.00pm</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Right Column -->
+        <section class="right-column">
+            <!-- Climbing Center Information -->
+            <div class="facility">
+                <img src="{{ url_for('static', filename='climbing.jpg') }}" alt="climbing hall" class="facility-image">
+                <div class="facility-info">
+                    <h2>climbing hall</h2>
+                    <p>706 square meters of climbable surface up to 15 meters.144 Regularly changing indoor climbing wall routes.</p>
+                    <p>All ages can reach new heights with climbing for young to teenagers.</p>
+                    <h3>Opening times:</h3>
+                        <p>Monday - Friday 4.00pm - 10.00pm</p>
+                        <p>Saturday - Sunday 8.00am - 5.00pm</p>
+                </div>
+            </div>
+
+            <!-- Tennis Court Information -->
+            <div class="facility">
+                <img src="{{ url_for('static', filename='tennis.jpg') }}" alt="tennis" class="facility-image">
+                <div class="facility-info">
+                    <h2>tennis courts</h2>
+                    <p>Indoor and outdoor tennis courts. Six glass-backed squash courts.</p> 
+                    <p>16 badminton courts. All the space you need to serve, swing and dunk.</p>
+                    <h3>opening times:<h3>
+                        <p>Monday - Friday 6.00am - 10.00pm</p>
+                        <p>Saturday - Sunday 7.00am - 8.00pm</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Membership Information -->
+    <section class="membership">
+        <h2>Membership informtaion</h2>
+        <p>Find your active members with a range of local gym membership options to suit everyone.</p>
+        <p>For school staff and students: Pound30 per month, Pound356 per year</p>
+        <p>To the public: Pound61 per month, Pound732 per year</p>
+        <!-- Buttons for Purchasing Membership and Login -->
+        <div class="button-container">
+            <button onclick="window.location.href='{{ url_for('purchase') }}';">Purchase Membership</button>
+            <button onclick="window.location.href='{{ url_for('booking') }}';">Start booking</button>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+        <p>Address: Sports and Wellness Hub, University of Warwick, Coventry, CV4 7EU</p>
+        <p>Phone: +44 24 7652 3011</p>
+        <p>Email: warwicksport@warwick.ac.uk</p>
+        <p>Parking is available near to all of our main facilities. Find out more about parking at the Sports & Wellness Hub.</p>
+    </footer>
+</body>
+</html>

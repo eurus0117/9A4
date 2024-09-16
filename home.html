@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University of Warwick's recreational and sports facilities</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
+    
+</head>
+<body>
+    <header>
+        <h1>University of Warwick's recreational and sports facilities</h1>
+        <h2>Welcome</h2>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('information') }}">information</a></li>
+                <li><a href="{{ url_for('booking') }}">booking</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <img src="{{ url_for('static', filename='banner.jpg') }}" alt="Sports Facilities" class="main-image">
+        <div class="button-container">
+            {% if session.get('username') %}
+                <button onclick="window.location.href='{{ url_for('logout') }}';">logout</button>
+            {% else %}
+                <button onclick="window.location.href='{{ url_for('register') }}';">register</button>
+                <button onclick="window.location.href='{{ url_for('login') }}';">login</button>
+            {% endif %}
+        </div>
+    </main>
+    <footer>
+        <p>Address: Sports and Wellness Hub, University of Warwick, Coventry, CV4 7EU</p>
+        <p>Phone: +44 24 7652 3011</p>
+        <p>Email: warwicksport@warwick.ac.uk</p>
+    </footer>
+</body>
+</html>

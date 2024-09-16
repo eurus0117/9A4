@@ -1,0 +1,119 @@
+/* General Styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+    color: #333;
+}
+
+/* Header Styling */
+.header {
+    text-align: center;
+    background-color: #3C1053; /* Purple background */
+    color: white;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex; /* Aligns navigation links horizontally */
+    justify-content: center; /* Centers the links */
+}
+
+nav ul li {
+    margin-right: 20px;
+}
+
+nav ul li a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 28px;
+}
+
+.header p {
+    margin: 10px 0 0 0;
+}
+
+/* Booking Container */
+.booking-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+/* Date Picker Styling */
+#booking-date {
+    margin: 20px 0;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 250px;
+}
+
+/* Time Slot Container */
+#time-slots {
+    width: 100%;
+    max-width: 800px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+#time-slots h3 {
+    margin-bottom: 10px;
+    color: #3C1053;
+}
+
+/* Slot List */
+.slot-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+/* Time Slot Button Styling */
+.slot-button {
+    padding: 10px 20px;
+    background-color: #3C1053;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 14px;
+}
+
+.slot-button.selected {
+    background-color: #333; /* black when selected */
+}
+
+/* Confirm Booking Button */
+#confirm-booking {
+    margin-top: 20px;
+    padding: 12px 24px;
+    font-size: 16px;
+    background-color: #cccccc; /* Grey when disabled */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: not-allowed;
+    transition: background-color 0.3s;
+}
+
+#confirm-booking:not(.disabled) {
+    background-color:#333; /* black when active */
+    cursor: pointer;
+}
+
+#confirm-booking:not(.disabled):hover {
+    background-color: #333;
+}

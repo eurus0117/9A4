@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GYM Booking</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='gym.css') }}">
+</head>
+
+<body>
+    <header class="header">
+        <h1>GYM Booing</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('information') }}">information</a></li>
+                <li><a href="{{ url_for('booking') }}">booking</a></li>
+            </ul>
+        <p>Select a date and time slot to book a gym appointment</p>
+    </header>
+
+    <main class="booking-container">
+        <!-- Calendar and Time Slot Selection -->
+        <label for="booking-date">choose a date:</label>
+        <input type="date" id="booking-date" onchange="updateAvailableSlots()" style="display: block;">
+
+        <div id="time-slots" class="slots">
+            <h3>choose a time:</h3>
+            <div class="slot-list">
+                <!-- Available time slots will appear here -->
+            </div>
+        </div>
+
+        <!-- Confirmation Button -->
+        <button id="confirm-booking" onclick="confirmBooking()" disabled class="disabled">confirm</button>
+    </main>
+
+    <script>
+        let selectedSlot = null;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const dateInput = document.getElementById('booking-date');
+            const today = new Date().toISOString().split('T')[0];
+            dateInput.min = today; // Only allow dates from today onwards
+        });
+
+        // Function to update available slots based on selected date
+        function updateAvailableSlots() {
+            const dateInput = document.getElementById('booking-date');
+            const selectedDate = new Date(dateInput.value);
+            const dayOfWeek = selectedDate.getDay(); // Get day of the week (0 = Sunday, 6 = Saturday)
+            const slotContainer = document.querySelector('.slot-list');
+            slotContainer.innerHTML = ''; // Clear existing slots
+
+            // Define time slots based on gym working hours
+            const weekdaySlots = generateTimeSlots(6, 23); // 6:00 AM to 11:00 PM
+            const weekendSlots = generateTimeSlots(7, 20); // 7:00 AM to 8:00 PM
+
+            const availableSlots = (dayOfWeek === 0 || dayOfWeek === 6) ? weekendSlots : weekdaySlots;
+
+            availableSlots.forEach(slot => {
+                const slotButton = document.createElement('button');
+                slotButton.textContent = slot;
+                slotButton.classList.add('slot-button');
+                slotButton.onclick = () => selectSlot(slotButton);
+                slotContainer.appendChild(slotButton);
+            });
+        }
+
+        // Function to generate time slots between start and end hours
+        function generateTimeSlots(startHour, endHour) {
+            const slots = [];
+            for (let hour = startHour; hour < endHour; hour++) {
+                const nextHour = hour + 1;
+                slots.push(`${formatTime(hour)} - ${formatTime(nextHour)}`);
+            }
+            return slots;
+        }
+
+        // Function to format time in HH:MM AM/PM format
+        function formatTime(hour) {
+            const period = hour >= 12 ? 'PM' : 'AM';
+            const formattedHour = hour % 12 === 0 ? 12 : hour % 12;
+            return `${formattedHour}:00 ${period}`;
+        }
+
+        // Function to select a time slot and activate the confirm button
+        function selectSlot(slotButton) {
+            // Deselect previously selected slot
+            if (selectedSlot) {
+                selectedSlot.classList.remove('selected');
+            }
+
+            // Select the new slot
+            selectedSlot = slotButton;
+            selectedSlot.classList.add('selected');
+
+            // Enable the confirm booking button
+            const confirmButton = document.getElementById('confirm-booking');
+            confirmButton.disabled = false;
+            confirmButton.classList.remove('disabled');
+        }
+
+        // Function to confirm booking
+        function confirmBooking() {
+            const date = document.getElementById('booking-date').value;
+            if (!date || !selectedSlot) {
+                alert('Please select a date and time period.');
+                return;
+            }
+
+            alert('Appointment Successful! Please check your email to confirm the appointment.');
+            // Replace with actual email sending functionality using backend
+            fetch('/send_confirmation', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ date: date, time: selectedSlot.textContent }),
+            });
+        }
+    </script>
+</body>
+</html>

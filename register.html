@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>register - University of Warwick's recreational and sports facilities</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
+</head>
+<body>
+    <h2>Register</h2>
+    <form method="POST">
+        <label for="email">email:</label>
+        <input type="email" name="email" required>
+        <label for="password">password:</label>
+        <input type="password" name="password" required>
+        <button type="submit">register</button>
+    </form>
+    <a href="{{ url_for('home') }}">back to homepage</a>
+
+    <!-- JavaScript to display alerts -->
+    <script>
+        // Checks for Flash messages from the backend and displays an alert
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    alert("{{ message }}");
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </script>
+</body>
+</html>

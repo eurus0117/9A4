@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='member.css') }}">
+</head>
+<body>
+    <header class="header">
+        <h1>Cart</h1>
+    </header>
+
+    <main class="cart">
+        {% if cart_items %}
+            <ul>
+                {% for item in cart_items %}
+                    <li>{{ item.name }}: {{ item.price }}Pounds</li>
+                {% endfor %}
+            </ul>
+            <button onclick="window.location.href='{{ url_for('checkout') }}';">confirm to checkout</button>
+            <button onclick="window.location.href='{{ url_for('clear_cart') }}';">clean your cart</button>
+        {% else %}
+            <p>your cart is empty</p>
+        {% endif %}
+        <button onclick="window.location.href='{{ url_for('purchase') }}';">back</button>
+    </main>
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>confirm to checkout</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='member.css') }}">
+    <style>
+        .payment-methods button {
+            margin: 5px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .selected {
+            background-color: #3C1053;
+            color: #fff;
+        }
+
+        .disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .action-buttons {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-buttons button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .return-home {
+            background-color: #2b0a40;
+            color: #fff;
+        }
+
+        .start-booking {
+            background-color: #28a745;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>confirm to checkout</h1>
+    </header>
+
+    <main class="checkout">
+        <h2>product</h2>
+        {% if cart_items %}
+            <ul>
+                {% for item in cart_items %}
+                    <li>name: {{ item.name }} - price: {{ item.price }}pounds</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <form id="payment-form">
+            <label for="email">entry you email account:</label>
+            <input type="email" id="email" required placeholder="enter email">
+            
+            <h3>please chooe a payment method:</h3>
+            <div class="payment-methods">
+                <button type="button" class="payment-button" onclick="selectPaymentMethod('Apple Pay')">Apple Pay</button>
+                <button type="button" class="payment-button" onclick="selectPaymentMethod('Credit Card')">Credit Card</button>
+            </div>
+            
+            <input type="hidden" id="selected-payment-method">
+            
+            <div class="action-buttons">
+                <button id="confirm-payment" type="submit" class="disabled" disabled>confirm to checkout</button>
+                <button type="button" class="return-home" onclick="window.location.href='{{ url_for('home') }}';">back to homepage</button>
+            </div>
+        </form>
+    </main>
+
+    <script>
+        let selectedPaymentMethod = null;
+
+        // choose a way to pay
+        function selectPaymentMethod(method) {
+            selectedPaymentMethod = method;
+            document.getElementById('selected-payment-method').value = method;
+
+            // clean all
+            const buttons = document.querySelectorAll('.payment-button');
+            buttons.forEach(button => button.classList.remove('selected'));
+
+            // Add selected state to the current button
+            event.target.classList.add('selected');
+
+            // Check if the Confirm Payment button can be enabled
+            checkFormCompletion();
+        }
+
+        // Check if the Confirm Payment button can be enabled
+        function checkFormCompletion() {
+            const email = document.getElementById('email').value;
+            const confirmButton = document.getElementById('confirm-payment');
+
+            if (email && selectedPaymentMethod) {
+                confirmButton.disabled = false;
+                confirmButton.classList.remove('disabled');
+            } else {
+                confirmButton.disabled = true;
+                confirmButton.classList.add('disabled');
+            }
+        }
+
+        // Listening to mailbox input, checking whether the form is complete in real time
+        document.getElementById('email').addEventListener('input', checkFormCompletion);
+
+        // Submit event for the Confirm Payment button
+        document.getElementById('payment-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const email = document.getElementById('email').value;
+            alert(`Your purchase is confirmed! Payment Methods: ${selectedPaymentMethod}. Confirmation message sent to ${email}`);
+        });
+    </script>
+</body>
+</html>

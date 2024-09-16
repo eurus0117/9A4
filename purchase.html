@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>membership purchasing</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='member.css') }}">
+    <style>
+        /* Cart Icon Styling */
+        .cart-icon {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            font-size: 18px;
+            color: #fff;
+            background-color: #3C1053;
+            padding: 10px 15px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .cart-icon:hover {
+            background-color: #2b0a40;
+        }
+
+        .cart-count {
+            font-weight: bold;
+            background-color: #ffcc00;
+            color: #000;
+            padding: 5px 10px;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('information') }}">information</a></li>
+                <li><a href="{{ url_for('booking') }}">booking</a></li>
+            </ul>
+        </nav>
+        <h1>choose the membership card you prefer</h1>
+        <p>choose only one</p>
+        <div class="cart-icon" onclick="redirectToCart()">
+            <span>🛒 cart</span>
+            <span class="cart-count" id="cart-count">{{ session['cart']|length if session.get('cart') else 0 }}</span>
+        </div>
+    </header>
+
+    <main class="membership-options">
+        <div class="option">
+            <h2>to university staff and student</h2>
+            <p>month: 30 pounds | year: 356 pounds </p>
+            <form action="{{ url_for('add_to_cart') }}" method="POST">
+                <input type="hidden" name="product_name" value="to university staff and student - month">
+                <input type="hidden" name="product_price" value="30">
+                <button type="submit">add to cart - month</button>
+            </form>
+            <form action="{{ url_for('add_to_cart') }}" method="POST">
+                <input type="hidden" name="product_name" value="to university staff and student - year">
+                <input type="hidden" name="product_price" value="356">
+                <button type="submit">add to cart - year</button>
+            </form>
+        </div>
+        <div class="option">
+            <h2>to public</h2>
+            <p>month: 61 pounds | year: 732 pounds</p>
+            <form action="{{ url_for('add_to_cart') }}" method="POST">
+                <input type="hidden" name="product_name" value="to public - month">
+                <input type="hidden" name="product_price" value="61">
+                <button type="submit">add to cart - month</button>
+            </form>
+            <form action="{{ url_for('add_to_cart') }}" method="POST">
+                <input type="hidden" name="product_name" value="to public - year">
+                <input type="hidden" name="product_price" value="732">
+                <button type="submit">add to cart - year</button>
+            </form>
+        </div>
+        <div class="buttons">
+            <button onclick="window.location.href='{{ url_for('cart') }}';">cart</button>
+            <button onclick="window.location.href='{{ url_for('checkout') }}';">check out</button>
+        </div>
+    </main>
+
+    <script>
+        // Redirect to cart page when cart icon is clicked
+        function redirectToCart() {
+            window.location.href = '{{ url_for('cart') }}';
+        }
+    </script>
+</body>
+</html>
